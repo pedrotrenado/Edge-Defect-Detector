@@ -24,14 +24,16 @@ Trained for 10 epochs on 8,000 images, validated on 2,000.
 
 ## How to Run
 
+```bash
 pip install -r requirements.txt
 python train.py
+```
 
 ## Future Improvements
 
-- Replace CIFAR-10 subset with real industrial dataset (MVTec AD)
-- Add MMSE-based noise regularisation
-- Quantise model to INT8 for deployment on Cortex-M MCU (TinyML)
-- Experiment with MobileNetV2 for better accuracy/size tradeoff
+- Replace CIFAR-10 with MVTec AD — a real industrial defect dataset used in research
+- Quantise model to INT8 for deployment on Cortex-M MCU (TinyML) — reduces model size 4x
+- Experiment with MobileNetV2 — state-of-the-art lightweight architecture for edge devices
+- Add confusion matrix to better analyse false positives vs false negatives
 
 Author: Pedro Trenado
