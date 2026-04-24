@@ -5,37 +5,7 @@ simulating an Automated Optical Inspection (AOI) system used in industrial manuf
 Built from scratch with PyTorch, no pretrained models.
 
 ## Architecture
-[ INPUT ]              3x32x32 RGB Image
-           |
-           v
-  +-----------------+
-  |  CONV BLOCK 1   |      Detects edges & basic textures
-  | (3->16, 3x3)    |      Output: 16x16x16 (after Pool)
-  +-----------------+
-           |
-           v
-  +-----------------+
-  |  CONV BLOCK 2   |      Detects complex parts & shapes
-  | (16->32, 3x3)   |      Output: 8x8x32 (after Pool)
-  +-----------------+
-           |
-           v
-  +-----------------+      
-  |     FLATTEN     |      Converts 3D maps to 1D vector
-  |  (2048 units)   |      
-  +-----------------+
-           |
-           v
-  +-----------------+
-  |   DENSE LAYER   |      Reasoning & Feature synthesis
-  |  (2048 -> 128)  |      Includes Dropout (0.5) for robustness
-  +-----------------+
-           |
-           v
-  +-----------------+
-  |  OUTPUT LAYER   |      Final Classification
-  |    (128 -> 2)   |      [ Good ] vs [ Defective ]
-  +-----------------+
+![Diagram](diagram.png)
 
 **Total parameters: 267,618 (~1MB)**
 
