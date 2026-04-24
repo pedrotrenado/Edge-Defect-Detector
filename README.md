@@ -5,37 +5,37 @@ simulating an Automated Optical Inspection (AOI) system used in industrial manuf
 Built from scratch with PyTorch, no pretrained models.
 
 ## Architecture
-graph TD
-    %% Input Layer
-    In([<b>Input</b><br/>3x32x32 RGB Image]) 
-    
-    %% Feature Extraction
-    subgraph "Feature Extraction (CNN)"
-    In --> C1[<b>Conv Block 1</b><br/>16 filters, 3x3]
-    C1 --> R1[ReLU]
-    R1 --> P1[MaxPool 2x2]
-    
-    P1 --> C2[<b>Conv Block 2</b><br/>32 filters, 3x3]
-    C2 --> R2[ReLU]
-    R2 --> P2[MaxPool 2x2]
-    end
-
-    %% Classification
-    subgraph "Classifier Head"
-    P2 --> F[<b>Flatten</b><br/>2048 Units]
-    F --> L1[<b>Linear</b><br/>2048 to 128]
-    L1 --> R3[ReLU]
-    R3 --> D[<b>Dropout</b><br/>p=0.5]
-    D --> L2[<b>Output Linear</b><br/>128 to 2]
-    end
-
-    %% Output
-    L2 --> Out{<b>Final Class</b><br/>Good / Defect}
-
-    %% Styling
-    style In fill:#f9f,stroke:#333,stroke-width:2px
-    style Out fill:#bbf,stroke:#333,stroke-width:2px
-    style F fill:#fff4dd,stroke:#d4a017
+[ INPUT ]              3x32x32 RGB Image
+           |
+           v
+  +-----------------+
+  |  CONV BLOCK 1   |      Detects edges & basic textures
+  | (3->16, 3x3)    |      Output: 16x16x16 (after Pool)
+  +-----------------+
+           |
+           v
+  +-----------------+
+  |  CONV BLOCK 2   |      Detects complex parts & shapes
+  | (16->32, 3x3)   |      Output: 8x8x32 (after Pool)
+  +-----------------+
+           |
+           v
+  +-----------------+      
+  |     FLATTEN     |      Converts 3D maps to 1D vector
+  |  (2048 units)   |      
+  +-----------------+
+           |
+           v
+  +-----------------+
+  |   DENSE LAYER   |      Reasoning & Feature synthesis
+  |  (2048 -> 128)  |      Includes Dropout (0.5) for robustness
+  +-----------------+
+           |
+           v
+  +-----------------+
+  |  OUTPUT LAYER   |      Final Classification
+  |    (128 -> 2)   |      [ Good ] vs [ Defective ]
+  +-----------------+
 
 **Total parameters: 267,618 (~1MB)**
 
